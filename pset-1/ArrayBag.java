@@ -194,8 +194,6 @@ public class ArrayBag implements Bag {
 
             if(this.contains(otherItems[i])){
 
-                System.out.println("Other " + otherItems[i]);
-
                 this.remove(otherItems[i]);
                 isRemoved = true;
             }
@@ -267,40 +265,42 @@ public class ArrayBag implements Bag {
             itemStr = scan.nextLine();
             bag1.add(itemStr);
         }
-        System.out.println("bag 1 = " + bag1);
-        System.out.println();
-
-        System.out.println("Increase Capacity By: ");
-        int amount = scan.nextInt();
-
-        bag1.increaseCapacity(amount);
-
-        System.out.println("New size " + bag1.capacity());
-
-        Bag other = new ArrayBag();
-
-        System.out.println("Other : ");
-
-        for (int i = 1; i < 6; i += 2) {
-            System.out.println(i);
-            other.add(i + "");
-        }
-        bag1.removeItems(other);
-
-        System.out.println("Removing other :");
-
-        Object[] items = bag1.toArray();
-        for (int i = 0; i < items.length; i++) {
-            System.out.println(items[i]);
-        }
-
-        System.out.println("Union with : ");
-
-        Object [] result = bag1.unionWith(other).toArray();
-
-        for (int i = 0; i < result.length; i++) {
-            System.out.println(result[i]);
-        }
+//        System.out.println("bag 1 = " + bag1);
+//        System.out.println();
+//
+//        System.out.println("Increase Capacity By: ");
+//        int amount = scan.nextInt();
+//
+//        bag1.increaseCapacity(amount);
+//
+//        System.out.println("New size " + bag1.capacity());
+//
+//        Bag other = new ArrayBag();
+//
+//        System.out.println("Other : ");
+//
+//        for (int i = 1; i < 6; i += 2) {
+//            System.out.println(i);
+//            other.add(i + "");
+//        }
+//        bag1.removeItems(other);
+//
+//        System.out.println("Removing other :");
+//
+//        Object[] items = bag1.toArray();
+//        for (int i = 0; i < items.length; i++) {
+//            System.out.println(items[i]);
+//        }
+//
+//        System.out.println("Union with : ");
+//
+//        bag1 = (ArrayBag) bag1.unionWith(other);
+//
+//        Object [] result = bag1.toArray();
+//
+//        for (int i = 0; i < result.length; i++) {
+//            System.out.println(result[i]);
+//        }
         
         // Select a random item and print it.
         Object item = bag1.grab();
