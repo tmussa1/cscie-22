@@ -192,7 +192,10 @@ public class ArrayBag implements Bag {
 
         for(int i  = 0; i < other.numItems(); i++){
 
-            while(this.contains(otherItems[i])){
+            if(this.contains(otherItems[i])){
+
+                System.out.println("Other " + otherItems[i]);
+
                 this.remove(otherItems[i]);
                 isRemoved = true;
             }
@@ -217,11 +220,11 @@ public class ArrayBag implements Bag {
         for(int i = 0, k = 0; i < other.numItems() || k < this.numItems; i++, k++){
 
             if(i < other.numItems() && !result.contains(otherArray[i])){
-                result.add(other);
+                result.add(otherArray[i]);
             }
 
             if(k < this.numItems && !result.contains(thisArray[k])){
-                result.add(other);
+                result.add(thisArray[k]);
             }
         }
 
@@ -266,6 +269,38 @@ public class ArrayBag implements Bag {
         }
         System.out.println("bag 1 = " + bag1);
         System.out.println();
+
+        System.out.println("Increase Capacity By: ");
+        int amount = scan.nextInt();
+
+        bag1.increaseCapacity(amount);
+
+        System.out.println("New size " + bag1.capacity());
+
+        Bag other = new ArrayBag();
+
+        System.out.println("Other : ");
+
+        for (int i = 1; i < 6; i += 2) {
+            System.out.println(i);
+            other.add(i + "");
+        }
+        bag1.removeItems(other);
+
+        System.out.println("Removing other :");
+
+        Object[] items = bag1.toArray();
+        for (int i = 0; i < items.length; i++) {
+            System.out.println(items[i]);
+        }
+
+        System.out.println("Union with : ");
+
+        Object [] result = bag1.unionWith(other).toArray();
+
+        for (int i = 0; i < result.length; i++) {
+            System.out.println(result[i]);
+        }
         
         // Select a random item and print it.
         Object item = bag1.grab();
@@ -274,9 +309,9 @@ public class ArrayBag implements Bag {
         
         // Iterate over the objects in bag1, printing them one per
         // line.
-        Object[] items = bag1.toArray();
-        for (int i = 0; i < items.length; i++) {
-            System.out.println(items[i]);
+        Object[] res = bag1.toArray();
+        for (int i = 0; i < res.length; i++) {
+            System.out.println(res[i]);
         }
         System.out.println();
         
