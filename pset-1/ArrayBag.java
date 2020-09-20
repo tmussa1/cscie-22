@@ -201,6 +201,33 @@ public class ArrayBag implements Bag {
         return isRemoved;
     }
 
+    @Override
+    public Bag unionWith(Bag other) {
+
+        if(other == null){
+            throw new IllegalArgumentException("The parameter can not be empty");
+        } else if(other.numItems() == 0 && this.numItems() == 0){
+            return new ArrayBag();
+        }
+
+        ArrayBag result = new ArrayBag(other.numItems() + this.numItems());
+        Object [] otherArray = other.toArray();
+        Object [] thisArray = this.toArray();
+
+        for(int i = 0, k = 0; i < other.numItems() || k < this.numItems; i++, k++){
+
+            if(i < other.numItems() && !result.contains(otherArray[i])){
+                result.add(other);
+            }
+
+            if(k < this.numItems && !result.contains(thisArray[k])){
+                result.add(other);
+            }
+        }
+
+        return result;
+    }
+
     /**
      * toString - converts this ArrayBag into a string that can be printed.
      * Overrides the version of this method inherited from the Object class.

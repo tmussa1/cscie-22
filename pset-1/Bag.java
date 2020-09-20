@@ -58,4 +58,6 @@ public interface Bag {
     void increaseCapacity(int amount);
 
     boolean removeItems(Bag other);
+
+    Bag unionWith(Bag other);
 } 
