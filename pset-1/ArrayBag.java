@@ -192,7 +192,7 @@ public class ArrayBag implements Bag {
 
         for(int i  = 0; i < other.numItems(); i++){
 
-            if(this.contains(otherItems[i])){
+            while(this.contains(otherItems[i])){
 
                 this.remove(otherItems[i]);
                 isRemoved = true;
@@ -211,7 +211,7 @@ public class ArrayBag implements Bag {
             return new ArrayBag();
         }
 
-        ArrayBag result = new ArrayBag(other.numItems() + this.numItems());
+        ArrayBag result = new ArrayBag(other.capacity() + this.capacity());
         Object [] otherArray = other.toArray();
         Object [] thisArray = this.toArray();
 
