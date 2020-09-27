@@ -72,19 +72,19 @@ public class MagicSquare {
     }
 
     private void removeElementAndShiftArray(int val) {
+
        int index = 0;
 
-       for(int i = 0; i < this.usedValuesCount; i++){
-           if(this.usedValues[i] == val){
+       for(int i = 0; i < this.usedValuesCount; i++) {
+           if (this.usedValues[i] == val) {
                index = i;
            }
        }
 
-       this.usedValues[index] = 0;
-
        for(int k = index; k < this.usedValuesCount - 1; k++){
-           this.usedValues[index] = this.usedValues[index + 1];
+           this.usedValues[k] = this.usedValues[k + 1];
        }
+
        this.usedValuesCount--;
     }
 
@@ -152,7 +152,7 @@ public class MagicSquare {
         Scanner console = new Scanner(System.in);
         System.out.print("What order Magic Square? ");
         int order = console.nextInt();
-        
+
         MagicSquare puzzle = new MagicSquare(order);
         if (puzzle.solve()) {
             System.out.println("Here's the solution:");
