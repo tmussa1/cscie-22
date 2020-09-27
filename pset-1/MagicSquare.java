@@ -36,7 +36,8 @@ public class MagicSquare {
 
     private boolean isPossible(int row, int col, int val){
 
-        if(Arrays.asList(this.usedValues).contains(val)){
+        if(Arrays.asList(this.usedValues).contains(val)
+                || this.values[row][col] != 0){
             return false;
         }
 
@@ -86,26 +87,29 @@ public class MagicSquare {
     }
 
 
-    public boolean solveMagicSquare(int row){
+    public boolean solveMagicSquare(int row, int colParam){
 
         if(row == this.order){
             this.display();
             return true;
         }
 
-        for(int col = 0; col < order; col++) {
-            for (int val = 1; val < this.possibleValues; val++) {
+        if(colParam == this.order){
+            this.display();
+            return true;
+        }
 
-                if (this.isPossible(row, col, val)){
+        for (int val = 1; val < this.possibleValues; val++) {
 
-                    this.placeValue(row, col, val);
+            if (this.isPossible(row, colParam, val)){
 
-                    if(solveMagicSquare(row + 1)){
-                        return true;
-                    }
+                this.placeValue(row, colParam, val);
 
-                    this.removeValue(row, col, val);
+                if(solveMagicSquare(row,colParam + 1)){
+                    return solveMagicSquare(row + 1, 0);
                 }
+
+                this.removeValue(row, colParam, val);
             }
         }
         return false;
@@ -113,7 +117,7 @@ public class MagicSquare {
 
 
     public boolean solve() {
-        return solveMagicSquare(0);
+        return solveMagicSquare(0, 0);
     }
 
     public void display() {
