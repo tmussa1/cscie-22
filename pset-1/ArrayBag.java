@@ -3,7 +3,7 @@
  * 
  * Computer Science E-22
  *
- * Modified by: <your name>, <your e-mail address>
+ * Modified by: Tofik Mussa, tmussa@g.harvard.edu
  */
 
 import java.util.*;
