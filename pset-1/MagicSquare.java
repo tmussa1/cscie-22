@@ -118,6 +118,7 @@ public class MagicSquare {
 
                 if(solveMagicSquare(row,colParam + 1)){
                     solveMagicSquare(row + 1, 0);
+                    //return true;
                 }
 
                 this.removeValue(row, colParam, val);
