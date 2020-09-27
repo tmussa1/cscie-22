@@ -36,10 +36,10 @@ public class MagicSquare {
 
     private boolean isPossible(int row, int col, int val){
 
-        if(Arrays.asList(this.usedValues).contains(val)
-                || this.values[row][col] != 0){
+        if(isContained(val) || this.values[row][col] != 0){
             return false;
         }
+
 
         if(col == order - 1 && this.rowSums[row] - val != 0) {
                 return false;
@@ -54,6 +54,16 @@ public class MagicSquare {
         }
 
         return true;
+    }
+
+    private boolean isContained(int val){
+
+        for(int i = 0; i < this.usedValuesCount; i++){
+            if(this.usedValues[i] == val){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void placeValue(int row, int col, int val){
