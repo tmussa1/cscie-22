@@ -41,31 +41,33 @@ public class MagicSquare {
             return false;
         }
 
-        if(row == order - 1 || col == order - 1){
-            if(this.colSums[col] - val != 0 || this.rowSums[row] - val != 0){
+        if(col == order - 1 && this.rowSums[row] - val != 0) {
                 return false;
-            }
+        }
+
+        if(row == order - 1 && this.colSums[col] - val != 0){
+            return false;
         }
 
         if(this.colSums[col] - val > 0 && this.rowSums[row] - val > 0){
             return true;
         }
 
-        return false;
+        return true;
     }
 
     private void placeValue(int row, int col, int val){
         this.values[row][col] = val;
-        this.colSums[col] += val;
-        this.rowSums[row] += val;
+        this.colSums[col] -= val;
+        this.rowSums[row] -= val;
         this.usedValues[this.usedValuesCount] = val;
         this.usedValuesCount++;
     }
 
     private void removeValue(int row, int col, int val){
         this.values[row][col] = 0;
-        this.colSums[col] -= val;
-        this.rowSums[row] -= val;
+        this.colSums[col] += val;
+        this.rowSums[row] += val;
         this.removeElementAndShiftArray(val);
     }
 
@@ -95,18 +97,17 @@ public class MagicSquare {
         }
 
         if(colParam == this.order){
-            this.display();
             return true;
         }
 
-        for (int val = 1; val < this.possibleValues; val++) {
+        for (int val = 1; val <= this.possibleValues; val++) {
 
             if (this.isPossible(row, colParam, val)){
 
                 this.placeValue(row, colParam, val);
 
                 if(solveMagicSquare(row,colParam + 1)){
-                    return solveMagicSquare(row + 1, 0);
+                    solveMagicSquare(row + 1, 0);
                 }
 
                 this.removeValue(row, colParam, val);
