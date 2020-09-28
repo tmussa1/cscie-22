@@ -102,11 +102,6 @@ public class MagicSquare {
     public boolean solveMagicSquare(int row, int colParam){
 
         if(row == this.order){
-            this.display();
-            return true;
-        }
-
-        if(colParam == this.order){
             return true;
         }
 
@@ -116,9 +111,14 @@ public class MagicSquare {
 
                 this.placeValue(row, colParam, val);
 
-                if(solveMagicSquare(row,colParam + 1)){
-                    solveMagicSquare(row + 1, 0);
-                    //return true;
+                if(colParam == this.order - 1){
+                    if(solveMagicSquare(row + 1, 0)){
+                        return true;
+                    }
+                } else {
+                    if(solveMagicSquare(row,colParam + 1)){
+                        return true;
+                    }
                 }
 
                 this.removeValue(row, colParam, val);
