@@ -220,6 +220,23 @@ public class SortCount {
 
     public static void bubbleSort2(int [] arr){
 
+        outer:
+        for (int i = arr.length - 1; i > 0; i--) {
+
+            int alreadySortedCount = i;
+
+            inner:
+            for (int j = 0; j < i; j++) {
+                if (compare(arr[j] > arr[j+1])) {
+                    alreadySortedCount--;
+                    swap(arr, j, j+1);
+                }
+            }
+
+            if(alreadySortedCount == i){
+                break outer;
+            }
+        }
     }
     
     /*
@@ -435,6 +452,13 @@ public class SortCount {
         System.arraycopy(asave, 0, a, 0, asave.length);
         initStats();
         bubbleSort(a);
+        printStats();
+        printArray(a);
+
+        System.out.print("bubbleSort 2\t\t");
+        System.arraycopy(asave, 0, a, 0, asave.length);
+        initStats();
+        bubbleSort2(a);
         printStats();
         printArray(a);
     }
