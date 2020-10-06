@@ -11,22 +11,23 @@ public class Problem8 {
         Sort.mergeSort(a1);
         Sort.mergeSort(a2);
 
-        for(int i = 0, j = 0; i < a1.length && j < a2.length; ){
+        int i = 0, j = 0;
+
+        while(i < a1.length && j < a2.length){
 
             if(a1[i] < a2[j]){
                 i++;
             } else if(a1[i] == a2[j]){
-
                 if(k > 0){
-
                     if(result[k -1] != a1[i]) {
                         result[k] = a1[i];
-                        i++; j++; k++;
+                        k++;
                     }
                 } else {
                     result[k] = a1[i];
-                    i++; j++; k++;
+                    k++;
                 }
+                i++; j++;
             } else {
                 j++;
             }
