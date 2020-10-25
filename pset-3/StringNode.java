@@ -145,10 +145,22 @@ public class StringNode {
         /**
          * Null checks and initialize
          */
-        if(str != null && str.next != null){
-            node = new StringNode(str.ch, str.next);
-            str = str.next;
-            trav = node;
+        if(str != null){
+
+            /**
+             * For more than one elements
+             */
+            if(str.next != null){
+                node = new StringNode(str.ch, str.next);
+                str = str.next;
+                trav = node;
+            } else {
+                /**
+                 * For a single element
+                 */
+                node = new StringNode(str.ch, null);
+                return node;
+            }
         }
 
         /**
