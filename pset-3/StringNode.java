@@ -92,6 +92,9 @@ public class StringNode {
 
         while(str1 != null || str2 != null){
 
+            /**
+             * Same comparisons as recursive
+             */
             if(str1 == null){
                 return 1;
             } else if(str2 == null){
@@ -298,6 +301,9 @@ public class StringNode {
 
         int count = 0;
 
+        /**
+         * Count occurences
+         */
         while(str != null){
 
             if(str.ch == ch){
@@ -369,6 +375,9 @@ public class StringNode {
             return;
         }
 
+        /**
+         * Recursively change to uppercase
+         */
         str.ch = Character.toUpperCase(str.ch);
 
         toUpperCase(str.next);
