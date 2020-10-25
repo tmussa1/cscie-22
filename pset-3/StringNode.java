@@ -136,16 +136,29 @@ public class StringNode {
      * copy - returns a copy of the given linked-list string
      */
     public static StringNode copy(StringNode str) {
-        if (str == null) {
-            return null;
+
+        StringNode node = null, trav = null;
+
+        /**
+         * Null checks and initialize
+         */
+        if(str != null && str.next != null){
+            node = new StringNode(str.ch, str.next);
+            str = str.next;
+            trav = node;
         }
 
-        // make a recursive call to copy the rest of the list
-        StringNode copyRest = copy(str.next);
-           
-        // create and return a copy of the first node, 
-        // with its next field pointing to the copy of the rest
-        return new StringNode(str.ch, copyRest);
+        /**
+         * Traverse the list and copy
+         */
+        while(str != null){
+
+            node.next = new StringNode(str.ch, str.next);
+            node = node.next;
+            str = str.next;
+        }
+
+        return trav;
     }
 
     /**
