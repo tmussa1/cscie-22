@@ -23,14 +23,14 @@ import java.util.*;
  * and it also allows the methods to handle empty strings, which are 
  * represented using a value of null.
  */
-public class StringNode {
+public class StringNode2 {
     private char ch;
     private StringNode next;
 
     /**
      * Constructor
      */
-    public StringNode(char c, StringNode n) {
+    public StringNode2(char c, StringNode n) {
         this.ch = c;
         this.next = n;
     }
@@ -89,25 +89,20 @@ public class StringNode {
      * itself (e.g., "be" comes before "become").
      */
     public static int compareAlpha(StringNode str1, StringNode str2) {
-
-        while(str1 != null || str2 != null){
-
-            if(str1 == null){
-                return 1;
-            } else if(str2 == null){
-                return 2;
-            } else if(str1.ch < str2.ch){
-                return 1;
-            } else if(str2.ch < str1.ch){
-                return 2;
-            }
-
-            str1 = str1.next;
-            str2 = str2.next;
+        if (str1 == null && str2 == null) {
+            return 0;
+        } else if (str1 == null) {
+            return 1;
+        } else if (str2 == null) {
+            return 2;
+        } else if (str1.ch < str2.ch) {
+            return 1;
+        } else if (str2.ch < str1.ch) {
+            return 2;
+        } else {
+            int compareRest = compareAlpha(str1.next, str2.next);
+            return compareRest;
         }
-
-        //They are equal if there is no early returns
-        return 0;
     }
 
     /**
@@ -156,7 +151,7 @@ public class StringNode {
         if (str == null) {
             throw new IllegalArgumentException("string is empty");
         } else if (i < 0) { 
-            throw new IllegalArgumentException("invalid x: " + i);
+            throw new IllegalArgumentException("invalid index: " + i);
         } else if (i == 0) { 
             str = str.next;
         } else {
@@ -180,37 +175,42 @@ public class StringNode {
      * in the modified linked list, because the first node can change.
      */
     public static StringNode insertBefore(StringNode str, char newChar, 
-                                         char beforeChar) {
-
+                                         char beforeChar) 
+    {
         StringNode newNode = new StringNode(newChar, null);
-
-        if(str == null){
+        
+        // If the string is empty or beforeChar is in the current first node, 
+        // return the new node, which is the new first node.
+        if (str == null) {
             return newNode;
-        } else if(str.ch == beforeChar){
-           newNode.next = str;
-           return newNode;
+        } else if (str.ch == beforeChar) {
+            newNode.next = str;
+            return newNode;
         }
-
-        //Write comments
-        StringNode rest = insertBefore(str.next, newChar, beforeChar);
-
-        if(str.next != null && str.next.ch == beforeChar){
-            newNode.next = str.next;
-            str.next = newNode;
-            return str;
-        } else {
-
-            if(str == null || str.ch == beforeChar){
-                return str;
-            }  else if(str.next == null && str.ch != beforeChar){
-                str.next = newNode;
+        
+        StringNode trail = null;
+        StringNode trav = str;
+        while (trav != null) {
+            if (trav.ch == beforeChar) {
+                // Perform the insertion. Given the else-if check above,
+                // we know that trail is non-null if we get here,
+                // so we don't need to worry about a null-pointer exception.
+                trail.next = newNode;
+                newNode.next = trav; 
+                
+                // We're done. Return the first node as required.
                 return str;
             }
-
-            insertBefore(rest.next, newChar, beforeChar);
+            
+            trail = trav;
+            trav = trav.next;
         }
-
-        return rest;
+        
+        // If we get here, we didn't find beforeChar,
+        // so we insert the new node at the end of the list
+        // by using trail, which is pointing to the current last node.
+        trail.next = newNode;
+        return str;
     }
 
     /**
@@ -283,21 +283,18 @@ public class StringNode {
     /**
      * numOccur - find the number of occurrences of the character
      * ch in the linked list to which str refers
-     * Iterative version
      */
     public static int numOccur(StringNode str, char ch) {
-
-        int count = 0;
-
-        while(str != null){
-
-            if(str.ch == ch){
-                count += 1;
-            }
-            str = str.next;
+        if (str == null) {
+            return 0;
         }
-
-        return count;
+     
+        int numInRest = numOccur(str.next, ch);
+        if (str.ch == ch) {
+            return 1 + numInRest;
+        } else {
+            return numInRest;
+        }
     }
 
     /**
@@ -352,17 +349,13 @@ public class StringNode {
      * toUpperCase - converts all of the characters in the specified
      * linked-list string to upper case.  Modifies the list itself,
      * rather than creating a new list.
-     * Recursive version
      */
-    public static void toUpperCase(StringNode str) {
-
-        if(str == null){
-            return;
+    public static void toUpperCase(StringNode str) {        
+        StringNode trav = str; 
+        while (trav != null) {
+            trav.ch = Character.toUpperCase(trav.ch); 
+            trav = trav.next;
         }
-
-        str.ch = Character.toUpperCase(str.ch);
-
-        toUpperCase(str.next);
     } 
               
     public static void main(String[] args) throws IOException {
