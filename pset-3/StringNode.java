@@ -184,6 +184,9 @@ public class StringNode {
 
         StringNode newNode = new StringNode(newChar, null);
 
+        /**
+         * If the node is empty or if inserting before the first element
+         */
         if(str == null){
             return newNode;
         } else if(str.ch == beforeChar){
@@ -191,26 +194,19 @@ public class StringNode {
            return newNode;
         }
 
-        //Write comments
-        StringNode rest = insertBefore(str.next, newChar, beforeChar);
+        insertBefore(str.next, newChar, beforeChar);
 
+        /**
+         * Insert before the element that is found or append to the end
+         */
         if(str.next != null && str.next.ch == beforeChar){
             newNode.next = str.next;
             str.next = newNode;
-            return str;
-        } else {
-
-            if(str == null || str.ch == beforeChar){
-                return str;
-            }  else if(str.next == null && str.ch != beforeChar){
-                str.next = newNode;
-                return str;
-            }
-
-            insertBefore(rest.next, newChar, beforeChar);
+        } else if(str.next == null){
+            str.next = newNode;
         }
 
-        return rest;
+        return str;
     }
 
     /**
