@@ -1,0 +1,164 @@
+
+n = 1000 - fully sorted 
+
+	bubbleSort		     499500 comparisons	0 moves
+ 	bubbleSort 2		        999 comparisons	0 moves
+
+	bubbleSort		     499500 comparisons	0 moves
+	bubbleSort 2		        999 comparisons	0 moves
+
+	bubbleSort		     499500 comparisons	0 moves
+	bubbleSort 2		        999 comparisons	0 moves
+
+	bubbleSort		     499500 comparisons	0 moves
+	bubbleSort 2		        999 comparisons	0 moves
+
+	bubbleSort		     499500 comparisons	0 moves
+	bubbleSort 2		        999 comparisons	0 moves
+
+-- It looks like this doesn't change for fully sorted array
+
+	* Average comparisons - 499500
+	* Average moves - 99
+
+n = 1000 - randomly generated
+	
+	bubbleSort		     499500 comparisons	     751950 moves
+	bubbleSort 2		     496725 comparisons	     751950 moves
+
+	bubbleSort		     499500 comparisons	     746883 moves
+	bubbleSort 2		     491997 comparisons	     746883 moves
+
+	bubbleSort		     499500 comparisons	     720294 moves
+	bubbleSort 2		     499175 comparisons	     720294 moves
+	
+	bubbleSort		     499500 comparisons	     760623 moves
+	bubbleSort 2		     499269 comparisons	     760623 moves
+
+	bubbleSort		     499500 comparisons	     756063 moves
+	bubbleSort 2		     499122 comparisons	     756063 moves
+
+	bubbleSort		     499500 comparisons	     756063 moves
+	bubbleSort 2		     499290 comparisons	     756063 moves
+
+	bubbleSort		     499500 comparisons	     769230 moves
+	bubbleSort 2		     499247 comparisons	     769230 moves
+
+	bubbleSort		     499500 comparisons	     747048 moves
+	bubbleSort 2		     498797 comparisons	     747048 moves
+
+	bubbleSort		     499500 comparisons	     751860 moves
+	bubbleSort 2		     499065 comparisons	     751860 moves
+
+	bubbleSort		     499500 comparisons	     760122 moves
+	bubbleSort 2		     498225 comparisons	     760122 moves
+
+Average for bubble sort 2 - 498091 comparisons
+			  - Approximately 75600 moves
+
+n = 2000 - fully sorted
+
+	bubbleSort		    1999000 comparisons	0 moves
+	bubbleSort 2		       1999 comparisons	0 moves
+	
+	bubbleSort		    1999000 comparisons	0 moves
+	bubbleSort 2		       1999 comparisons	0 moves
+
+	bubbleSort		    1999000 comparisons	0 moves
+	bubbleSort 2		       1999 comparisons	0 moves
+
+-- It looks like this doesn't change for fully sorted array
+
+	* Average comparisons - 1999000 
+	* Average moves - 1999 
+
+n = 2000 - randomly generated 
+
+	bubbleSort		    1999000 comparisons	    3011784 moves
+	bubbleSort 2		    1997047 comparisons	    3011784 moves
+
+	bubbleSort		    1999000 comparisons	    2953821 moves
+	bubbleSort 2		    1996920 comparisons	    2953821 moves
+
+	bubbleSort		    1999000 comparisons	    2995008 moves
+	bubbleSort 2		    1998472 comparisons	    2995008 moves
+
+	bubbleSort		    1999000 comparisons	    2902470 moves
+	bubbleSort 2		    1998535 comparisons	    2902470 moves
+
+	bubbleSort		    1999000 comparisons	    2928270 moves
+	bubbleSort 2		    1998847 comparisons	    2928270 moves
+
+	bubbleSort		    1999000 comparisons	    2940480 moves
+	bubbleSort 2		    1998810 comparisons	    2940480 moves
+
+	bubbleSort		    1999000 comparisons	    2946327 moves
+	bubbleSort 2		    1998535 comparisons	    2946327 moves
+
+	bubbleSort		    1999000 comparisons	    2963217 moves
+	bubbleSort 2		    1998297 comparisons	    2963217 moves
+
+	bubbleSort		    1999000 comparisons	    2991141 moves
+	bubbleSort 2		    1994995 comparisons	    2991141 moves
+
+	bubbleSort		    1999000 comparisons	    2963598 moves
+	bubbleSort 2		    1994535 comparisons	    2963598 moves
+
+n = 4000 - fully sorted
+
+	bubbleSort		    7998000 comparisons	0 moves
+	bubbleSort 2		       3999 comparisons	0 moves
+
+n = 4000 - randomly generated
+
+	bubbleSort		    7998000 comparisons	   11954178 moves
+	bubbleSort 2		    7995654 comparisons	   11954178 moves
+
+n = 8000 - fully sorted
+
+	bubbleSort		   31996000 comparisons	0 moves
+	bubbleSort 2		       7999 comparisons	0 moves
+
+n = 8000 - randomly generated
+
+	bubbleSort		   31996000 comparisons	   48832980 moves
+	bubbleSort 2		   31985415 comparisons	   48832980 moves
+
+n = 16000 - fully sorted
+
+	bubbleSort		  127992000 comparisons	0 moves
+	bubbleSort 2		      15999 comparisons	0 moves
+
+n = 16000 - randomly generated
+
+	bubbleSort		  127992000 comparisons	  191962359 moves
+	bubbleSort 2		  127974980 comparisons	  191962359 moves
+
+n = 32000 - fully sorted
+
+	bubbleSort		  511984000 comparisons	0 moves
+	bubbleSort 2		      31999 comparisons	0 moves
+
+n = 32000 - randomly generated
+
+	bubbleSort		  511984000 comparisons	  765799485 moves
+	bubbleSort 2		  511977895 comparisons	  765799485 moves
+
+* The algorithm for bubbleSort 2 grows with O(n) time in the best case when the array is fully sorted. There are no
+  moves and only n comparisons. Doubling the problem size only doubles the comparisons and doesn't affect the moves 
+  which is zero. 
+
+	1999/999 is approximately 2
+	3999/1999 is approximately 2 as well
+
+  So it grows linearly with the array size in the best case
+
+* When the array is random, the complexity doesn't appear to change much from bubble sort which is O(n^2). As can be
+  seen from the experiment, the moves and comparisons for the improved version vs the conventional bubble sort don't
+  differ by much. Also doubling the problem size quadruples the moves and comparisons. 
+
+	3011784/751950 is approximately 4.005
+	11954178/3011784 is approximately 3.969 
+  
+  So it grows quadratically with the array size in the worst case
+
