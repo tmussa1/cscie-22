@@ -393,7 +393,21 @@ public class StringNode {
         str.ch = Character.toUpperCase(str.ch);
 
         toUpperCase(str.next);
-    } 
+    }
+
+    public static StringNode reverseInPlace(StringNode str){
+
+        if(str == null){
+            return str;
+        }
+
+        reverseInPlace(str.next);
+
+        str.next = str;
+        str = str.next;
+
+        return str;
+    }
               
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
@@ -449,5 +463,10 @@ public class StringNode {
         char before = in.nextLine().charAt(0);
         str1 = StringNode.insertBefore(str1, ch, before);
         System.out.println(str1);
+
+        System.out.println("Reversing");
+        //str1 = StringNode.reverseInPlace(str1);
+        System.out.println(str1);
+
     }
 }

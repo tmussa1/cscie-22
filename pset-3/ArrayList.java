@@ -126,6 +126,45 @@ public class ArrayList implements List {
         str = str + "}";
         return str;
     }
+
+    public boolean removeAll(Object item){
+
+        int rightEnd = this.length() - 1, countOfRemoved = 0;
+        boolean isRemoved = false;
+
+        for(int i = 0; i <= rightEnd; i++){
+
+            if(this.items[i].equals(item)){
+                isRemoved = true;
+                items[i] = null;
+                countOfRemoved += 1;
+            }
+        }
+
+        for(int i = 0, k = rightEnd; i < this.length() && k >= (this.length() - countOfRemoved); ){
+
+            if(this.items[i] == null){
+
+                if(this.items[k] != null){
+
+                    Object temp = this.items[k];
+                    this.items[i] = temp;
+                    this.items[k] = null;
+
+                    k--;
+                    i++;
+
+                } else {
+                    k--;
+                }
+
+            } else {
+                i++;
+            }
+        }
+
+        return isRemoved;
+    }
     
     /*
      * iterator - returns an iterator for this list
@@ -133,5 +172,23 @@ public class ArrayList implements List {
     public ListIterator iterator() {
         // still needs to be implemented
         return null;
+    }
+
+    public static void main(String [] args){
+
+        String[] letters = {"a", "b", "c", "a", "c", "d", "e", "a"};
+        ArrayList list1 = new ArrayList(letters);
+        System.out.println(list1.removeAll("a"));
+        System.out.println(list1);
+
+        letters = new String [] {"b", "c", "c", "d", "e"};
+        list1 = new ArrayList(letters);
+        System.out.println(list1.removeAll("c"));
+        System.out.println(list1);
+
+        letters = new String [] {"b", "d", "e"};
+        list1 = new ArrayList(letters);
+        System.out.println(list1.removeAll("x"));
+        System.out.println(list1);
     }
 }
