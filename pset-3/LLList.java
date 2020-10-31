@@ -147,6 +147,40 @@ public class LLList implements List {
         length--;
         return removed;
     }
+
+    /*
+    Removes all occurences of an item from LLList
+     */
+    public boolean removeAll(Object item){
+
+        boolean isRemoved = false;
+
+        Node current = head.next, prev = head;
+
+        while(current != null){
+
+            /*
+            Point prev to the next element if item is found and set flag to true
+             */
+            if(current.item.equals(item)) {
+                prev.next = current.next;
+                isRemoved = true;
+            }
+
+            /*
+            Advance prev only if the current element is not equal the item in the parameter
+             */
+            if(!current.item.equals(item)){
+                prev = current;
+            }
+
+            /*
+            Always advance current
+             */
+            current = current.next;
+        }
+        return isRemoved;
+    }
     
     /*
      * toString - converts the list into a String of the form 
@@ -204,5 +238,23 @@ public class LLList implements List {
             nextNode = nextNode.next;
             return item;
         }
+    }
+
+    public static void main(String [] args){
+
+        String[] letters = {"a", "b", "c", "a", "c", "d", "e", "a"};
+        LLList list1 = new LLList(letters);
+        System.out.println(list1.removeAll("a"));
+        System.out.println(list1);
+
+        letters = new String [] {"b", "c", "c", "d", "e"};
+        list1 = new LLList(letters);
+        System.out.println(list1.removeAll("c"));
+        System.out.println(list1);
+
+        letters = new String [] {"b", "d", "e"};
+        list1 = new LLList(letters);
+        System.out.println(list1.removeAll("x"));
+        System.out.println(list1);
     }
 }

@@ -127,26 +127,38 @@ public class ArrayList implements List {
         return str;
     }
 
+    /**
+     * Removes all occurrences of an item from an ArrayList
+     */
     public boolean removeAll(Object item){
 
         int rightEnd = this.length() - 1, countOfRemoved = 0;
         boolean isRemoved = false;
 
+        /**
+         * Remove the item from the ArrayList on the first pass
+         */
         for(int i = 0; i <= rightEnd; i++){
 
             if(this.items[i].equals(item)){
-                isRemoved = true;
+                isRemoved = true; //whether or not we removed an item
                 items[i] = null;
-                countOfRemoved += 1;
+                countOfRemoved += 1; //Counts how many items were removed
             }
         }
 
+        /**
+         * Bubble the null elements to the end of the ArrayList on the second pass
+         */
         for(int i = 0, k = rightEnd; i < this.length() && k >= (this.length() - countOfRemoved); ){
 
             if(this.items[i] == null){
 
                 if(this.items[k] != null){
 
+                    /**
+                     * Swap
+                     */
                     Object temp = this.items[k];
                     this.items[i] = temp;
                     this.items[k] = null;
