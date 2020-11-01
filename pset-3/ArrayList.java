@@ -147,31 +147,18 @@ public class ArrayList implements List {
             }
         }
 
-        /**
-         * Bubble the null elements to the end of the ArrayList on the second pass
-         */
-        for(int i = 0, k = rightEnd; i < this.length() && k >= (this.length() - countOfRemoved); ){
+        int nullCount = 0;
+
+        for(int i = 0; i < this.length(); i++){
 
             if(this.items[i] == null){
-
-                if(this.items[k] != null){
-
-                    /**
-                     * Swap
-                     */
-                    Object temp = this.items[k];
-                    this.items[i] = temp;
-                    this.items[k] = null;
-
-                    k--;
-                    i++;
-
-                } else {
-                    k--;
-                }
-
+                nullCount++;
             } else {
-                i++;
+
+                if(nullCount > 0){
+                    this.items[i - nullCount] = this.items[i];
+                    this.items[i] = null;
+                }
             }
         }
 
