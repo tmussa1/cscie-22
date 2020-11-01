@@ -168,6 +168,8 @@ public class ArrayList implements List {
             }
         }
 
+        length = length - nullCount;
+
         return isRemoved;
     }
     
