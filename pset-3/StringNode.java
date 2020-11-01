@@ -415,12 +415,12 @@ public class StringNode {
            return 0;
         }
 
+
         int rest = 1 + lastIndexOf(str.next, ch);
 
-        System.out.println("rest " + rest);
-
         if(str.ch == ch){
-            return length(str) - rest;
+            System.out.println("rest " + length(str));
+            return rest;
         }
 
         return rest;
