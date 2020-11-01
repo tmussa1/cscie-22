@@ -132,7 +132,7 @@ public class ArrayList implements List {
      */
     public boolean removeAll(Object item){
 
-        int rightEnd = this.length() - 1, countOfRemoved = 0;
+        int rightEnd = this.length() - 1;
         boolean isRemoved = false;
 
         /**
@@ -143,7 +143,6 @@ public class ArrayList implements List {
             if(this.items[i].equals(item)){
                 isRemoved = true; //whether or not we removed an item
                 items[i] = null;
-                countOfRemoved += 1; //Counts how many items were removed
             }
         }
 
@@ -151,10 +150,17 @@ public class ArrayList implements List {
 
         for(int i = 0; i < this.length(); i++){
 
+            /**
+             * Count the number of nulls up to the point
+             */
             if(this.items[i] == null){
                 nullCount++;
             } else {
 
+                /**
+                 * If nulls have been encountered already, shift to
+                 * the left with however many count of nulls
+                 */
                 if(nullCount > 0){
                     this.items[i - nullCount] = this.items[i];
                     this.items[i] = null;
