@@ -430,76 +430,80 @@ public class StringNode {
            return 0;
         }
 
-        int rest = 1 + lastIndexOf(str.next, ch);
-
         if(str.ch == ch){
+            int rest = 1 + lastIndexOf(str.next, ch);
+            System.out.println("rest " + rest);
             return rest;
+        } else {
+            int other = lastIndexOf(str.next, ch);
+            System.out.println("other " + other);
+            return other;
         }
 
-        return -1;
+        //return -1;
     }
               
     public static void main(String[] args) throws IOException {
-        Scanner in = new Scanner(System.in);
+//        Scanner in = new Scanner(System.in);
+//
+//        // toUpperCase
+//        StringNode str = StringNode.convert("fine");
+//        System.out.print("Here's a string: ");
+//        System.out.println(str);    // implicit toString call
+//        System.out.print("Here it is in upper-case letters: ");
+//        StringNode.toUpperCase(str);
+//        System.out.println(str);
+//
+//        // numOccur
+//        System.out.print("Enter a string: ");
+//        String s = in.nextLine();
+//        StringNode str1 = StringNode.convert(s);
+//        System.out.print("\nWhat character to count? ");
+//        char ch = in.nextLine().charAt(0);
+//        int count = StringNode.numOccur(str1, ch);
+//        System.out.println("There are " + count + " occurrences of " + ch);
+//
+//        // copy and deleteChar
+//        int n = -1;
+//        while (n < 0) {
+//            System.out.print("\nWhat # character to delete (>= 0)? ");
+//            n = in.nextInt();
+//            in.nextLine();
+//        }
+//        StringNode copyStr1 = StringNode.copy(str1);
+//        try {
+//            str1 = StringNode.deleteChar(str1, n);
+//            StringNode.print(str1);
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("The string is too short.");
+//        }
+//
+//        // The copy should be unchanged!
+//        str1 = copyStr1;
+//        System.out.print("\nReturning to the unchanged copy: ");
+//        System.out.println(copyStr1);
+//
+//        // compareAlpha
+//        System.out.print("\nType another string: ");
+//        s = in.nextLine();
+//        StringNode str2 = StringNode.convert(s);
+//        System.out.print("\ncomparing " + str1 + " and " + str2 + " gives: ");
+//        System.out.println(StringNode.compareAlpha(str1, str2));
+//
+//        // insertBefore
+//        System.out.print("What character to insert? ");
+//        ch = in.nextLine().charAt(0);
+//        System.out.print("\nWhat character to insert before? ");
+//        char before = in.nextLine().charAt(0);
+//        str1 = StringNode.insertBefore(str1, ch, before);
+//        System.out.println(str1);
+//
+//        System.out.println("Reversing");
+//        StringNode s4 = StringNode.convert("singing");
+//        s4 = StringNode.reverseInPlace(s4);
+//        System.out.println(s4);
 
-        // toUpperCase
-        StringNode str = StringNode.convert("fine");
-        System.out.print("Here's a string: ");
-        System.out.println(str);    // implicit toString call
-        System.out.print("Here it is in upper-case letters: ");
-        StringNode.toUpperCase(str);
-        System.out.println(str);
-
-        // numOccur
-        System.out.print("Enter a string: ");
-        String s = in.nextLine();
-        StringNode str1 = StringNode.convert(s);
-        System.out.print("\nWhat character to count? ");
-        char ch = in.nextLine().charAt(0);
-        int count = StringNode.numOccur(str1, ch);
-        System.out.println("There are " + count + " occurrences of " + ch);
-
-        // copy and deleteChar
-        int n = -1;
-        while (n < 0) {
-            System.out.print("\nWhat # character to delete (>= 0)? ");
-            n = in.nextInt();
-            in.nextLine();
-        }
-        StringNode copyStr1 = StringNode.copy(str1);
-        try {
-            str1 = StringNode.deleteChar(str1, n);
-            StringNode.print(str1);
-        } catch (IllegalArgumentException e) {
-            System.out.println("The string is too short.");
-        }
-
-        // The copy should be unchanged!
-        str1 = copyStr1;
-        System.out.print("\nReturning to the unchanged copy: ");
-        System.out.println(copyStr1);
-
-        // compareAlpha
-        System.out.print("\nType another string: ");
-        s = in.nextLine();
-        StringNode str2 = StringNode.convert(s);
-        System.out.print("\ncomparing " + str1 + " and " + str2 + " gives: ");
-        System.out.println(StringNode.compareAlpha(str1, str2));
-
-        // insertBefore
-        System.out.print("What character to insert? ");
-        ch = in.nextLine().charAt(0);
-        System.out.print("\nWhat character to insert before? ");
-        char before = in.nextLine().charAt(0);
-        str1 = StringNode.insertBefore(str1, ch, before);
-        System.out.println(str1);
-
-        System.out.println("Reversing");
         StringNode s4 = StringNode.convert("singing");
-        s4 = StringNode.reverseInPlace(s4);
-        System.out.println(s4);
-
-        s4 = StringNode.convert("singing");
         System.out.println(StringNode.lastIndexOf(s4, 'n'));
         System.out.println(StringNode.lastIndexOf(s4, 'i'));
     }
