@@ -409,26 +409,159 @@ public class LinkedTree {
         }
         return -1;    // not found in either subtree
     }
+
+    /**
+     * Determine the depth of a node in a tree recursively
+     * @param key
+     * @return
+     */
+    public int depthIter(int key){
+
+        /*
+        If the root is empty
+         */
+        if(root == null){
+            return -1;
+        }
+
+        int depth = 0;
+        Node trav = root;
+
+        while(key != trav.key){
+
+            /**
+             * Go left or right based on the key's value. Break out of the loop if either is null
+             */
+            if(key < trav.key){
+
+                if(trav.left == null){
+                    break;
+                }
+
+                trav = trav.left;
+                depth += 1;
+            } else if(key > trav.key){
+
+                if(trav.right == null){
+                    break;
+                }
+
+                trav = trav.right;
+                depth += 1;
+            }
+
+            /**
+             * Break out of the loop if trav is null
+             */
+            if(trav == null){
+                break;
+            }
+        }
+
+        /**
+         * Return depth if key is found
+         */
+        if(key == trav.key){
+            return depth;
+        }
+
+        return -1; //key is not found
+    }
+
+    /**
+     * Wrapper method for summing even keys
+     * @return
+     */
+    public int sumEvens(){
+        return sumEvensInTree(root);
+    }
+
+    private static int sumEvensInTree(Node root){
+
+        /**
+         * Return 0 when root of the tree or subtree is null.
+         */
+        if(root == null){
+            return 0;
+        }
+
+        /**
+         * Traverse left and write accumlating even sums
+         */
+        int sum = sumEvensInTree(root.left) + sumEvensInTree(root.right);
+
+        /**
+         * Add it to sum on the way back if key is even
+         */
+        if(root.key % 2 == 0){
+            sum += root.key;
+        }
+
+        return sum;
+    }
+
+    /**
+     * Delete the maximum element in the tree
+     * @return
+     */
+    public int deleteMax(){
+
+        /**
+         * If the tree is empty
+         */
+        if(root == null){
+            return -1;
+        }
+
+        int maxKey = 0;
+        Node trail = null, trav = root;
+
+        /**
+         * Go as far to the right as possible since
+         * that is where we will find the maximum
+         * The maximum element doesn't have a right child
+         */
+        while(trav.right != null){
+            trail = trav;
+            trav = trav.right;
+        }
+
+        /**
+         * Set the previous element right child to
+         * the left child of what we are deleting
+         * if there is a left child
+         */
+        if(trav.left != null){
+            trail.right = trav.left;
+            maxKey = trav.key;
+            trav.left = null;
+            /**
+             * If it doesn't have a left child, set the reference
+             * to the right child of the previous element to null
+             */
+        } else {
+            maxKey = trav.key;
+            trail.right = null;
+        }
+
+        return maxKey;
+    }
     
     public static void main(String[] args) {
-        System.out.println("--- Testing depth()/depthInTree() from Problem 2 ---");
-        System.out.println();
-        System.out.println("(0) Testing on tree from Problem 7, depth of 13");
+
         try {
             LinkedTree tree = new LinkedTree();
             int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
             tree.insertKeys(keys);
-            
-            int results = tree.depth(56);
+
+            int results = tree.depth(37);
             System.out.println("actual results:");
             System.out.println(results);
             System.out.println("expected results:");
             System.out.println(2);
             System.out.print("MATCHES EXPECTED RESULTS?: ");
             System.out.println(results == 2);
-            tree.preorderPrint();
-            tree.inorderPrint();
-            //tree.postorderPrint();
+
         } catch (Exception e) {
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + e);
         }
@@ -443,6 +576,139 @@ public class LinkedTree {
          * IMPORTANT: Any tests for your inorder iterator from Problem 8
          * should go BEFORE your tests of the deleteMax method.
          */
-        
-    }
+
+        System.out.println("--- Testing depthIter() from Problem 7 part 1 ---");
+        System.out.println();
+        try {
+            LinkedTree tree = new LinkedTree();
+            System.out.println("(0) Testing on empty tree from Problem 7 part 1 empty tree, depth of 11");
+            System.out.println("empty tree: " + tree.depthIter(11));
+            System.out.println();
+            int[] keys = {21, 44, 75, 22, 9, 91, 66, 77, 11};
+            tree.insertKeys(keys);
+            System.out.println("(1) Testing on tree from Problem 7 part 1, depth of 21");
+            System.out.println("actual results:");
+            System.out.println(tree.depthIter(21));
+            System.out.println("expected results:");
+            System.out.println(0);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depthIter(21) == 0);
+            System.out.println();
+            System.out.println("(2) Testing on tree from Problem 7 part 1, depth of 77");
+            System.out.println("actual results:");
+            System.out.println(tree.depthIter(77));
+            System.out.println("expected results:");
+            System.out.println(4);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depthIter(77) == 4);
+            System.out.println();
+            System.out.println("(3) Testing on tree from Problem 7 part 1, depth of 9");
+            System.out.println("actual results:");
+            System.out.println(tree.depthIter(9));
+            System.out.println("expected results:");
+            System.out.println(1);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depthIter(9) == 1);
+            System.out.println();
+            System.out.println("(3) Testing on tree from Problem 7 part 1 with key that doesn't exist, depth of 97");
+            System.out.println("actual results:");
+            System.out.println(tree.depthIter(97));
+            System.out.println("expected results:");
+            System.out.println(-1);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depthIter(97) == -1);
+            System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
+
+        System.out.println("--- Testing sumEven() from Problem 7 part 2 ---");
+        System.out.println();
+
+        try {
+            LinkedTree tree = new LinkedTree();
+            System.out.println("(0) Testing on empty tree from Problem 7 part 2 with empty tree");
+            System.out.println("empty tree: " + tree.sumEvens());
+            System.out.println();
+            int[] keys = {12, 1, 4, 8, 5, 7};
+            tree.insertKeys(keys);
+            System.out.println("(1) Testing on tree from Problem 7 part 2 with evens {12, 4, 8}");
+            System.out.println("actual results:");
+            System.out.println(tree.sumEvens());
+            System.out.println("expected results:");
+            System.out.println(24);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.sumEvens() == 24);
+            System.out.println();
+
+            LinkedTree tree2 = new LinkedTree();
+            int keys2 [] = {1, 5, 2, 4, 7};
+            tree2.insertKeys(keys2);
+            System.out.println("(2) Testing on tree from Problem 7 part 2 with evens {2, 4}");
+            System.out.println("actual results:");
+            System.out.println(tree2.sumEvens());
+            System.out.println("expected results:");
+            System.out.println(6);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree2.sumEvens() == 6);
+            System.out.println();
+
+            LinkedTree tree3 = new LinkedTree();
+            int keys3 [] = {1, 5, 3, 9, 7};
+            tree2.insertKeys(keys2);
+            System.out.println("(3) Testing on tree from Problem 7 part 2 with no evens");
+            System.out.println("actual results:");
+            System.out.println(tree3.sumEvens());
+            System.out.println("expected results:");
+            System.out.println(0);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree3.sumEvens() == 0);
+            System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
+
+        System.out.println("--- Testing deleteMax() from Problem 7 part 3 ---");
+        System.out.println();
+
+        try {
+            LinkedTree tree = new LinkedTree();
+            System.out.println("(0) Testing on empty tree from Problem 7 part 3 with empty tree");
+            System.out.println("empty tree: " + tree.deleteMax());
+            System.out.println();
+            int[] keys = {11, 22, 5, 78, 24, 99, 57, 32, 68};
+            tree.insertKeys(keys);
+            System.out.println("(1) Testing on tree from Problem 7 part 3 delete max 99");
+            System.out.println("Deleting : " + tree.deleteMax());
+            System.out.println("Searching for deleted item actual results:");
+            System.out.println(tree.search(99));
+            System.out.println("expected results:");
+            System.out.println(""+ null);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.search(99) == null);
+            System.out.println();
+            System.out.println("(2) Testing on tree from Problem 7 part 3 deleting the next max 78");
+            System.out.println("Deleting : " + tree.deleteMax());
+            System.out.println("Searching for deleted item actual results:");
+            System.out.println(tree.search(78));
+            System.out.println("expected results:");
+            System.out.println(""+ null);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.search(78) == null);
+            System.out.println();
+            LinkedTree tree2 = new LinkedTree();
+            System.out.println("(3) Testing on tree from Problem 7 part 3 deleting with an empty tree");
+            System.out.println("actual results:");
+            System.out.println(tree2.deleteMax());
+            System.out.println("expected results:");
+            System.out.println(-1);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree2.deleteMax() == -1);
+            System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
+
+        System.out.println();
+     }
 }
