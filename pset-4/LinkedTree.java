@@ -40,7 +40,51 @@ public class LinkedTree {
     public LinkedTree() {
         root = null;
     }
-    
+
+    public LinkedTree(int[] keys, Object[] dataItems){
+
+        //Sort the array
+        SortHelper.quickSort(keys, dataItems);
+
+        //helper method to insert data items
+        insertBalanced(keys, dataItems);
+    }
+
+    private void insertBalanced(int[] keys, Object[] dataItems) {
+        //Bootstrapping a recursive method
+        insertBalancedRecursive(keys, dataItems, 0, dataItems.length);
+    }
+
+    private void insertBalancedRecursive(int[] keys, Object[] dataItems, int first, int last) {
+        int medium = ((last - first) / 2) + first;
+
+        /**
+         * Similar technique to quick sort,
+         * insert the middle element then recursively perform this on the
+         * left subtree
+         */
+        if(first < medium){
+            insert(keys[medium], dataItems[medium]);
+            insertBalancedRecursive(keys, dataItems, first, medium);
+        }
+
+        /*** insert the middle element then recursively perform this on the
+         * right subtree
+         */
+        if(last > medium + 1){
+            insert(keys[medium], dataItems[medium]);
+            insertBalancedRecursive(keys, dataItems, medium, last);
+        }
+
+        /**
+         * Special case where the ends meet,
+         * insert the middle element
+         */
+        if(last == medium || first == medium){
+            insert(keys[medium], dataItems[medium]);
+        }
+    }
+
     /*
      * Prints the keys of the tree in the order given by a preorder traversal.
      * Invokes the recursive preorderPrintTree method to do the work.
@@ -551,19 +595,23 @@ public class LinkedTree {
     
     public static void main(String[] args) {
 
+        System.out.println("--- Testing depth() from Problem 2 part 2 ---");
+        System.out.println();
         try {
-//            LinkedTree tree = new LinkedTree();
-//            int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
-//            tree.insertKeys(keys);
-//
-//            int results = tree.depth(56);
-//            System.out.println("actual results:");
-//            System.out.println(results);
-//            System.out.println("expected results:");
-//            System.out.println(2);
-//            System.out.print("MATCHES EXPECTED RESULTS?: ");
-//            System.out.println(results == 2);
-
+            LinkedTree tree = new LinkedTree();
+            System.out.println("(0) Testing on empty tree from Problem 2 part 2 empty tree, depth of 11");
+            System.out.println("empty tree: " + tree.depthIter(11));
+            System.out.println();
+            int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
+            tree.insertKeys(keys);
+            int results = tree.depth(56);
+            System.out.println("(1) Testing on tree from Problem 2 part 2, depth of 56");
+            System.out.println("actual results:");
+            System.out.println(results);
+            System.out.println("expected results:");
+            System.out.println(2);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(results == 2);
         } catch (Exception e) {
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + e);
         }
@@ -711,6 +759,42 @@ public class LinkedTree {
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
         }
 
+        System.out.println("--- Testing insertBalanced() from Problem 9 ---");
         System.out.println();
+        try{
+            int[] keys = {10, 8, 4, 2, 15, 12, 7};
+            String[] dataItems = {"d10", "d8", "d4", "d2", "d15", "d12", "d7"};
+            LinkedTree tree = new LinkedTree(keys, dataItems);
+            System.out.println("--- The tree looks like :");
+            tree.levelOrderPrint();
+            System.out.println("---");
+            System.out.println();
+            System.out.println("(1) Testing on tree from Problem 9, depth of 8 node");
+            System.out.println("actual results:");
+            System.out.println(tree.depth(8));
+            System.out.println("expected results:");
+            System.out.println(0);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depth(8) == 0);
+            System.out.println();
+            System.out.println("(2) Testing on tree from Problem 9, depth of 12 node");
+            System.out.println("actual results:");
+            System.out.println(tree.depth(12));
+            System.out.println("expected results:");
+            System.out.println(1);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depth(12) == 1);
+            System.out.println();
+            System.out.println("(2) Testing on tree from Problem 9, depth of 15 node");
+            System.out.println("actual results:");
+            System.out.println(tree.depth(15));
+            System.out.println("expected results:");
+            System.out.println(2);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(tree.depth(15) == 2);
+            System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
      }
 }
