@@ -398,25 +398,16 @@ public class LinkedTree {
      * of this method.
      */
     private static int depthInTree(int key, Node root) {
-        if (key == root.key) {
+        if (root == null || key == root.key) {
             return 0;     // found
         } else {
-            if (root.left != null) {
-                int depthInLeft = depthInTree(key, root.left);
-                if (depthInLeft != -1) {
-                    return depthInLeft + 1;
-                }
+            if(key < root.key){
+                return 1 + depthInTree(key, root.left);
+            } else if(key > root.key){
+                return 1 + depthInTree(key, root.right);
             }
-        
-            if (root.right != null) {
-                int depthInRight = depthInTree(key, root.right);
-                if (depthInRight != -1) {
-                    return depthInRight + 1;
-                }
-            }
-        
-            return -1;    // not found in either subtree
         }
+        return -1;    // not found in either subtree
     }
     
     public static void main(String[] args) {
@@ -428,13 +419,16 @@ public class LinkedTree {
             int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
             tree.insertKeys(keys);
             
-            int results = tree.depth(13);
+            int results = tree.depth(56);
             System.out.println("actual results:");
             System.out.println(results);
             System.out.println("expected results:");
             System.out.println(2);
             System.out.print("MATCHES EXPECTED RESULTS?: ");
             System.out.println(results == 2);
+            tree.preorderPrint();
+            tree.inorderPrint();
+            //tree.postorderPrint();
         } catch (Exception e) {
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + e);
         }
