@@ -474,20 +474,23 @@ public class LinkedTree {
 
             } else {
 
-                if(trav.parent != null){
+                if(trav.parent != null) {
 
-                    if(trav.parent.right == trav) {
+                    if (trav.parent.right == trav) {
 
-                        while (trav.parent.right == trav) {
+                        while (trav != null && trav.parent != null && trav.parent.right == trav) {
                             trav = trav.parent;
                         }
 
-                        nextNode = trav;
+                        if( trav.parent == null){
+                            nextNode = null;
+                        } else {
+                            nextNode = trav.parent;
+                        }
+
                     } else {
                         nextNode = trav.parent;
                     }
-                } else {
-                    nextNode = null;
                 }
             }
 
