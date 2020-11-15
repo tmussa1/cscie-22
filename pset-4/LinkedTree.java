@@ -422,8 +422,73 @@ public class LinkedTree {
             
             return key;
         }
-    }  
-    
+    }
+
+    private class InorderIterator implements LinkedTreeIterator{
+
+        private Node nextNode;
+
+        private InorderIterator() {
+
+            Node trav = root;
+
+            while(trav != null && trav.left != null){
+                trav = trav.left;
+            }
+
+            nextNode = trav;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (nextNode != null);
+        }
+
+        @Override
+        public int next() {
+
+            if (nextNode == null) {
+                throw new NoSuchElementException();
+            }
+
+            int key = nextNode.key;
+
+            Node trav = nextNode;
+
+            if(trav.right != null){
+
+                trav = trav.right;
+
+                while(trav != null && trav.left != null){
+                    trav = trav.left;
+                }
+
+                nextNode = trav;
+
+            } else {
+
+                if(trav.parent != null){
+
+                    if(trav.parent.right == trav) {
+
+                        while (trav.parent.right == trav) {
+                            trav = trav.parent;
+                        }
+
+                        nextNode = trav;
+                    } else {
+                        nextNode = trav.parent;
+                    }
+                } else {
+                    nextNode = null;
+                }
+            }
+
+
+            return key;
+        }
+    }
+
     /*
      * "wrapper method" for the recursive depthInTree() method
      * from PS 4, Problem 2
