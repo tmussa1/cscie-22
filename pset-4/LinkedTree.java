@@ -360,10 +360,13 @@ public class LinkedTree {
             
             if (toDelete == root) {
                 root = toDeleteChild;
+                root.parent = null;
             } else if (toDelete.key < parent.key) {
                 parent.left = toDeleteChild;
+                parent.left.parent = parent;
             } else {
                 parent.right = toDeleteChild;
+                parent.right.parent = parent;
             }
         }
     }
@@ -373,6 +376,7 @@ public class LinkedTree {
         return new PreorderIterator();
     }
 
+    /* Returns an inorder iterator for this tree. */
     public LinkedTreeIterator inorderIterator() {
         return new InorderIterator();
     }
@@ -431,6 +435,9 @@ public class LinkedTree {
         }
     }
 
+    /*
+    Inorder iterator
+     */
     private class InorderIterator implements LinkedTreeIterator{
 
         private Node nextNode;
@@ -439,6 +446,9 @@ public class LinkedTree {
 
             Node trav = root;
 
+            /*
+             * Find the left most child of the tree for root
+             */
             while(trav != null && trav.left != null){
                 trav = trav.left;
             }
@@ -446,6 +456,9 @@ public class LinkedTree {
             nextNode = trav;
         }
 
+        /*
+         * whether we have left to traverse
+         */
         @Override
         public boolean hasNext() {
             return (nextNode != null);
@@ -454,14 +467,19 @@ public class LinkedTree {
         @Override
         public int next() {
 
+            /*
+             * Next node is null. Never happens if we check hasNext first
+             */
             if (nextNode == null) {
                 throw new NoSuchElementException();
             }
 
+            //Save the key we are returning
             int key = nextNode.key;
 
             Node trav = nextNode;
 
+            //If we have a right child, move to the left most child of the right child
             if(trav.right != null){
 
                 trav = trav.right;
@@ -474,15 +492,18 @@ public class LinkedTree {
 
             } else {
 
+                //If we don't have a right child, move up the parents to find nextNode
                 if(trav.parent != null) {
 
                     if (trav.parent.right == trav) {
 
+                        //If the right child of our parent is the same as where we are, we
+                        //have already seen it so skip
                         while (trav != null && trav.parent != null && trav.parent.right == trav) {
                             trav = trav.parent;
                         }
 
-                        if( trav.parent == null){
+                        if(trav == null || trav.parent == null){
                             nextNode = null;
                         } else {
                             nextNode = trav.parent;
@@ -491,6 +512,9 @@ public class LinkedTree {
                     } else {
                         nextNode = trav.parent;
                     }
+                    //We exceeded the tree
+                } else {
+                    nextNode = null;
                 }
             }
 
@@ -793,6 +817,49 @@ public class LinkedTree {
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
         }
 
+        System.out.println("--- Testing inorderIterator() from Problem 8 ---");
+        System.out.println();
+        try{
+            LinkedTree tree = new LinkedTree();
+            int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
+            int [] inorder = new int[keys.length];
+            int count = 0;
+            tree.insertKeys(keys);
+            LinkedTreeIterator iter = tree.inorderIterator();
+            while (iter.hasNext()) {
+                int key = iter.next();
+                inorder[count] = key;
+                count++;
+                System.out.println(key);
+            }
+            System.out.println("(0) Testing part 8 the first element to be traversed");
+            System.out.println("actual results:");
+            System.out.println(inorder[0]);
+            System.out.println("expected results:");
+            System.out.println(13);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(inorder[0] == 13);
+            System.out.println();
+            System.out.println("(1) Testing part 8 the fourth element to be traversed");
+            System.out.println("actual results:");
+            System.out.println(inorder[3]);
+            System.out.println("expected results:");
+            System.out.println(35);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(inorder[3] == 35);
+            System.out.println();
+            System.out.println("(2) Testing part 8 the last element to be traversed");
+            System.out.println("actual results:");
+            System.out.println(inorder[keys.length - 1]);
+            System.out.println("expected results:");
+            System.out.println(70);
+            System.out.print("MATCHES EXPECTED RESULTS?: ");
+            System.out.println(inorder[keys.length - 1] == 70);
+            System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
+
         System.out.println("--- Testing deleteMax() from Problem 7 part 3 ---");
         System.out.println();
 
@@ -868,21 +935,6 @@ public class LinkedTree {
             System.out.print("MATCHES EXPECTED RESULTS?: ");
             System.out.println(tree.depth(15) == 2);
             System.out.println();
-        } catch(Exception ex){
-            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
-        }
-
-        System.out.println("--- Testing inorderIterator() from Problem 8 ---");
-        System.out.println();
-        try{
-            LinkedTree tree = new LinkedTree();
-            int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
-            tree.insertKeys(keys);
-            LinkedTreeIterator iter = tree.inorderIterator();
-            while (iter.hasNext()) {
-                int key = iter.next();
-                System.out.println(key);
-            }
         } catch(Exception ex){
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
         }
