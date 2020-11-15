@@ -274,10 +274,13 @@ public class LinkedTree {
         Node newNode = new Node(key, data);
         if (parent == null) {    // the tree was empty
             root = newNode;
+            root.parent = null;
         } else if (key < parent.key) {
             parent.left = newNode;
+            parent.left.parent = parent;
         } else {
             parent.right = newNode;
+            parent.right.parent = parent;
         }
     }
     
@@ -369,7 +372,11 @@ public class LinkedTree {
     public LinkedTreeIterator preorderIterator() {
         return new PreorderIterator();
     }
-    
+
+    public LinkedTreeIterator inorderIterator() {
+        return new InorderIterator();
+    }
+
     /* 
      * inner class for a preorder iterator 
      * IMPORTANT: You will not be able to actually use objects from this class
@@ -858,6 +865,21 @@ public class LinkedTree {
             System.out.print("MATCHES EXPECTED RESULTS?: ");
             System.out.println(tree.depth(15) == 2);
             System.out.println();
+        } catch(Exception ex){
+            System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
+        }
+
+        System.out.println("--- Testing inorderIterator() from Problem 8 ---");
+        System.out.println();
+        try{
+            LinkedTree tree = new LinkedTree();
+            int[] keys = {37, 26, 42, 13, 35, 56, 30, 47, 70};
+            tree.insertKeys(keys);
+            LinkedTreeIterator iter = tree.inorderIterator();
+            while (iter.hasNext()) {
+                int key = iter.next();
+                System.out.println(key);
+            }
         } catch(Exception ex){
             System.out.println("INCORRECTLY THREW AN EXCEPTION: " + ex);
         }
