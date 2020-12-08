@@ -247,30 +247,59 @@ public class Graph {
         }
         
         /* Start the recursion rolling... */
-        dfTrav(start, null);
+        dfTravIter(start, null);
     }
     
     /*
-     * dfTrav - a recursive method used to perform a depth-first
-     * traversal, starting from the specified vertex v.  The parent
-     * parameter specifies v's parent in the depth-first spanning
-     * tree.  In the initial invocation, the value of parent should be
-     * null, because the starting vertex is the root of the spanning
-     * tree.
+     * dfTrav - an iterative version
      */
-    private static void dfTrav(Vertex v, Vertex parent) {
-        /* Visit v. */
+    private static void dfTravIter(Vertex v) {
+
+        /**
+         * Start out by pushing the root into stack
+         */
+        Stack<Vertex> vertices = new LLStack<>();
+        vertices.push(v);
+
         System.out.println(v.id);
         v.done = true;
-        v.parent = parent;
-        
-        Edge e = v.edges;
-        while (e != null) {
-            Vertex w = e.end;
-            if (!w.done) {
-                dfTrav(w, v);
+        v.parent = null;
+
+        while(!vertices.isEmpty()){
+
+            Vertex toBeVisited = vertices.pop();
+
+            /**
+             * Visit the vertex if it is not visited yet
+             */
+            if(!toBeVisited.done){
+                System.out.println(toBeVisited.id);
+                toBeVisited.done = true;
             }
-            e = e.next;
+
+            Edge edge = toBeVisited.edges;
+
+            while(edge != null){
+
+                /**
+                 * Assign parent reference
+                 */
+                Vertex adjacent = edge.end;
+                adjacent.parent = toBeVisited;
+
+                /**
+                 * Add the adjacent vertices if they are not visted yet
+                 */
+                if(!adjacent.done){
+                    vertices.push(adjacent);
+                }
+
+                /**
+                 * Advance the LLList of edges
+                 */
+                edge = edge.next;
+            }
+
         }
     }
     
