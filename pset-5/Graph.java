@@ -247,7 +247,7 @@ public class Graph {
         }
         
         /* Start the recursion rolling... */
-        dfTravIter(start, null);
+        dfTravIter(start);
     }
     
     /*
